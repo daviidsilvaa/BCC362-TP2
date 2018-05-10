@@ -19,19 +19,18 @@ public class Client{
 	}
 
 	public void execute() throws UnknownHostException, IOException {
-		Socket client = new Socket(this.host, this.port);
+		Socket client = new Socket(this.server, this.port);
 
 		// Thread para enviar mensagens do servidor
-		new Thread(new ClientComm(client.getInputStream(), this.host)).start();
-
+		new Thread(new ClientComm(client.getInputStream())).start();
 
 		// Recebe frame do teclado e envia para o servidor
 		Scanner keyboard = new Scanner(System.in);
 		PrintStream frame = new PrintStream(client.getOutputStream());
 
-
 		while (keyboard.hasNextLine()) {
-			frame.print(keyboard.nextLine());
+			frame.print(this.host + ": ");
+			frame.println(keyboard.nextLine());
 		}
 
 		frame.close();

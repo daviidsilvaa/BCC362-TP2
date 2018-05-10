@@ -2,30 +2,28 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class MainClient {
 	public static void main(String[] args)
 	throws UnknownHostException, IOException{
-		// System.out.print("Insert your ID: ");
-		// Scanner scanner = new Scanner(System.in);
-		//
-		// // Dispara o cliente
-		// new Client(scanner.nextLine(),
-		// 		InetAddress.getLocalHost().toString().substring(
-		// 				InetAddress.getLocalHost().toString().indexOf("/") + 1), 12345).execute();
-
 		String[] str = new String[3];
 
+		// recebe o ID da maquina, ie, um apelido
 		System.out.print("Insert your ID: ");
 		Scanner scanner = new Scanner(System.in);
 		str[0] = scanner.nextLine();
 
-		System.out.print("Insert your address: ");
-		str[1] = scanner.nextLine();
+		// recebe o IP local
+		str[1] = new LocalIP().get();
 
-		str[2] = InetAddress.getLocalHost().toString().substring(InetAddress.getLocalHost().toString().indexOf("/") + 1);	
+		// recebe o IP do server
+		System.out.print("Insert server address: ");
+		str[2] = scanner.nextLine();
 
-		new Client(str[0], str[2], 12345, str[1]).execute();
+		// inicializa o Cliente
+		new Client(str[0], str[1], 12345, str[2]).execute();
 
 		scanner.close();
 	}

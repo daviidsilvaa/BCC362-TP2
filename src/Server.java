@@ -59,15 +59,12 @@ public class Server {
 				if(i == 0) {
 					clients.get(i+1).println(str_split[0] + ":" + str_split[1]);
 					clients.get(this.clients_address.size() - 1).println(str_split[0] + ":" + str_split[1]);
-					break;
 				} else if(i == (this.clients_address.size() - 1)) {
 					clients.get(i-1).println(str_split[0] + ":" + str_split[1]);
 					clients.get(0).println(str_split[0] + ":" + str_split[1]);
-					break;
 				} else {
 					clients.get(i+1).println(str_split[0] + ":" + str_split[1]);
 					clients.get(i-1).println(str_split[0] + ":" + str_split[1]);
-					break;
 				}
 			}
 		}

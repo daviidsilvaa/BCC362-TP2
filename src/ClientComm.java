@@ -4,11 +4,9 @@ import java.util.Scanner;
 
 public class ClientComm implements Runnable{
 	private InputStream server;
-	private String ip;
 
-	public ClientComm(InputStream server, String ip) {
+	public ClientComm(InputStream server) {
 		this.server = server;
-		this.ip = ip;
 	}
 
 	public void run() {
@@ -16,7 +14,7 @@ public class ClientComm implements Runnable{
 
 		while (scanner.hasNextLine()) {
 			// envia frame de bytes para o Server
-			System.out.println(new String(this.ip + ":" + scanner.nextLine()));
+			System.out.println(new String(scanner.nextLine()));
 		}
 		scanner.close();
 	}
