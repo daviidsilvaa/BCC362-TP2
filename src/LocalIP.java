@@ -9,8 +9,7 @@ public class LocalIP{
     public LocalIP(){ }
 
     // retorna o IP local da maquina
-    public String get()
-    throws IOException{
+    public String get(){
         String command = null;
 
         if(System.getProperty("os.name").equals("Linux")){
@@ -20,7 +19,12 @@ public class LocalIP{
         }
 
         Runtime r = Runtime.getRuntime();
-        Process p = r.exec(command);
+	Process p;
+	try{
+        p = r.exec(command);
+	}catch(Exception e){
+		return e.toString();
+	}
         Scanner s = new Scanner(p.getInputStream());
 
         StringBuilder sb = new StringBuilder("");

@@ -17,30 +17,52 @@ public class Server {
 		this.clients_address = new ArrayList<String>();
 	}
 
-	public void execute () throws IOException {
-		servidor = new ServerSocket(this.port);
+	public void execute (){
+		try{
+			servidor = new ServerSocket(this.port);
+		} catch(Exception e){
+			System.out.println(e.toString());
+		}
 		System.out.println("Porta " + this.port + " aberta!");
 
 		while(true){
 			// Aceita um cliente
-			Socket client = servidor.accept();
+			Socket client = new Socket();
+			try{
+			client = servidor.accept();
+			} catch(Exception e){
+				System.out.println(e.toString());
+			}
 			System.out.println("Cliente " + client.getInetAddress().getHostAddress() + " online");
-
 			clients_address.add(client.getInetAddress().getHostAddress());
 
 			// Adiciona saida do cliente a lista
-			this.clients.add(new PrintStream(client.getOutputStream()));
-
+			PrintStream p = null;
+			try{
+				p = new PrintStream(client.getOutputStream());
+				this.clients.add(p);
+			} catch(Exception e){
+				System.out.println(e.toString());
+			}
 			// Cria comunicador de cliente numa nova thread
-			new Thread(new ServerComm(client.getInputStream(), this)).start();
+			try{
+				new Thread(new ServerComm(client.getInputStream(), this)).start();
+			} catch(Exception e){
+				System.out.println(e.toString());
+			}
 		}
 	}
 
 	public void sendMessage(String str) {
+		String[] str_split = new String[2];
+		str_split = str.split(":");
+
+		System.out.println(str);
+
 		// Envia mensagem para todo mundo
-		// for (PrintStream client : this.clients) {
-		// 	client.println(frame);
-		// }
+		for (PrintStream client : this.clients) {
+			client.println(str_split[1]);
+		}
 
 		// for (PrintStream client : this.clients) {
 		// 	for (String s : this.clients_address) {
@@ -48,25 +70,20 @@ public class Server {
 		// 	}
 		// }
 
-		String[] str_split = new String[2];
-		str_split = str.split(":");
-
-		System.out.println(str_split[0]);
-
-		for(int i = 0; i < this.clients_address.size(); i++) {
-			if(this.clients_address.get(i).equals(str_split[0])) {
-				System.out.println(i);
-				if(i == 0) {
-					clients.get(i+1).println(str_split[0] + ":" + str_split[1]);
-					clients.get(this.clients_address.size() - 1).println(str_split[0] + ":" + str_split[1]);
-				} else if(i == (this.clients_address.size() - 1)) {
-					clients.get(i-1).println(str_split[0] + ":" + str_split[1]);
-					clients.get(0).println(str_split[0] + ":" + str_split[1]);
-				} else {
-					clients.get(i+1).println(str_split[0] + ":" + str_split[1]);
-					clients.get(i-1).println(str_split[0] + ":" + str_split[1]);
-				}
-			}
-		}
+		// for(int i = 0; i < this.clients_address.size(); i++) {
+		// 	if(this.clients_address.get(i).equals(str_split[0])) {
+		// 		System.out.println(i);
+		// 		if(i == 0) {
+		// 			clients.get(i+1).println(str_split[0] + ":" + str_split[1]);
+		// 			clients.get(this.clients_address.size() - 1).println(str_split[0] + ":" + str_split[1]);
+		// 		} else if(i == (this.clients_address.size() - 1)) {
+		// 			clients.get(i-1).println(str_split[0] + ":" + str_split[1]);
+		// 			clients.get(0).println(str_split[0] + ":" + str_split[1]);
+		// 		} else {
+		// 			clients.get(i+1).println(str_split[0] + ":" + str_split[1]);
+		// 			clients.get(i-1).println(str_split[0] + ":" + str_split[1]);
+		// 		}
+		// 	}
+		// }
 	}
 }

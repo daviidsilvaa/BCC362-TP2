@@ -5,13 +5,12 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class MainClient {
-	public static void main(String[] args)
-	throws UnknownHostException, IOException{
+public class MainClient implements Runnable{
+	public void run(){
 		String[] str = new String[3];
 
 		// recebe o ID da maquina, ie, um apelido
-		System.out.print("Insert your ID: ");
+		System.out.print("Insert server port: ");
 		Scanner scanner = new Scanner(System.in);
 		str[0] = scanner.nextLine();
 
@@ -23,7 +22,8 @@ public class MainClient {
 		str[2] = scanner.nextLine();
 
 		// inicializa o Cliente
-		new Client(str[0], str[1], 12345, str[2]).execute();
+		new Client(str[1], Integer.parseInt(str[0]), str[2]).execute();
+	
 
 		scanner.close();
 	}
