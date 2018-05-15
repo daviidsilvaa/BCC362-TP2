@@ -23,7 +23,7 @@ public class Server {
 		} catch(Exception e){
 			System.out.println(e.toString());
 		}
-		System.out.println("Porta " + this.port + " aberta!");
+		//System.out.println("Porta " + this.port + " aberta!");
 
 		while(true){
 			// Aceita um cliente
@@ -33,6 +33,7 @@ public class Server {
 			} catch(Exception e){
 				System.out.println(e.toString());
 			}
+			//new Thread(new ServerWorker(client)).start();
 			System.out.println("Cliente " + client.getInetAddress().getHostAddress() + " online");
 			clients_address.add(client.getInetAddress().getHostAddress());
 

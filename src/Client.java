@@ -42,14 +42,14 @@ public class Client{
 		}
 
 		while (keyboard.hasNextLine()) {
-			frame.print(this.host + ": ");
+			frame.print(this.host + ":");
 			frame.println(keyboard.nextLine());
 		}
 
 		frame.close();
 		keyboard.close();
-		
-		try{		
+
+		try{
 			client.close();
 		} catch(Exception e){
 			System.out.println(e.toString());

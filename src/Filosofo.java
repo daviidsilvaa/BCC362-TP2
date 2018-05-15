@@ -8,8 +8,11 @@ import java.util.regex.Matcher;
 public class Filosofo {
 	public static void main(String[] args)
 	throws UnknownHostException, IOException{
-		try{		
-			new Thread(new MainServer()).start();
+		Scanner scanner = new Scanner(System.in);
+		try{
+        	System.out.println("Insert server port: ");
+			String port = scanner.nextLine();
+			new Thread(new MainServer(Integer.parseInt(port))).start();
 		} catch(Exception e){
 			System.out.println(e.toString());
 		}

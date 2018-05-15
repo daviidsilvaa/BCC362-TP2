@@ -19,12 +19,12 @@ public class LocalIP{
         }
 
         Runtime r = Runtime.getRuntime();
-	Process p;
-	try{
-        p = r.exec(command);
-	}catch(Exception e){
-		return e.toString();
-	}
+	    Process p;
+	    try{
+            p = r.exec(command);
+	    }catch(Exception e){
+		  return e.toString();
+	    }
         Scanner s = new Scanner(p.getInputStream());
 
         StringBuilder sb = new StringBuilder("");
@@ -37,6 +37,10 @@ public class LocalIP{
         Matcher mt = pt.matcher(ipconfig);
         mt.find();
 
-        return mt.group();
+        try{
+            return mt.group();
+        }catch(Exception e){
+            return "127.0.0.1";
+        }
     }
 }
