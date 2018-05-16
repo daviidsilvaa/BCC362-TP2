@@ -1,1 +1,1 @@
-# BCC362-TP2
+# Java implementation of the Dining Philosophers Problem made by Bernardo and David in Distribuited Systems class (BCC362)
